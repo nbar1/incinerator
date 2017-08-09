@@ -12,17 +12,29 @@ const Select = styled.div`
 	font-size: 1.15em;
 	margin: 0 0 0.5em 0;
 	outline: none;
-	padding: 0.5em;
 	position: relative;
 	width: 100%;
 
-	select {
-		opacity: 0;
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
+	> div {
+		padding: 0.5em;
+		position: relative;
+		z-index: 2;
+	}
+
+	ul {
+		display: none;
+		margin: 0;
+		padding: 0;
+
+		&.show {
+			border-bottom: 1px solid #5a5a5a;
+			display: block;
+		}
+	}
+
+	li {
+		border-top: 1px solid #5a5a5a;
+		padding: 0.5em;
 	}
 
 	.dropdown-arrow:before {
@@ -37,6 +49,28 @@ const Select = styled.div`
 `;
 
 class EditableSelect extends Component {
+	constructor() {
+		super();
+
+		this.state = {
+			showOptions: false,
+		};
+	}
+
+	selectItem(value) {
+		this.setState({
+			showOptions: false,
+		});
+
+		this.props.onChange(this.props.name, value);
+	}
+
+	toggleList() {
+		this.setState({
+			showOptions: !this.state.showOptions,
+		});
+	}
+
 	render() {
 		let selectedOption = this.props.options.filter((option) => {
 			return option.value === this.props.value;
@@ -46,13 +80,17 @@ class EditableSelect extends Component {
 
 		return (
 			<Select>
-				<select name={this.props.name} value={this.props.value} onChange={this.props.onChange.bind(this)}>
-					<option value="" disabled>{this.props.placeholder}</option>
+				<div onClick={this.toggleList.bind(this)}>{selectedOptionName}</div>
+				<ul className={this.state.showOptions ? 'show' : ''}>
 					{this.props.options.map((option, key) => {
-						return <option key={key} value={option.value}>{option.name}</option>;
+						return <li
+							key={key}
+							onClick={() => {
+								return this.selectItem(option.value);
+							}}
+						>{option.name}</li>;
 					})}
-				</select>
-				{selectedOptionName}
+				</ul>
 				<span className="dropdown-arrow"></span>
 			</Select>
 		);

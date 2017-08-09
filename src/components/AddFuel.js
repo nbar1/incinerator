@@ -51,6 +51,12 @@ class AddFuel extends Component {
 		});
 	}
 
+	handleSelectChange(name, value) {
+		this.setState({
+			[name]: value,
+		});
+	}
+
 	render() {
 		return (
 			<div>
@@ -58,8 +64,8 @@ class AddFuel extends Component {
 					name="action"
 					value={this.state.action}
 					placeholder="Select an action.."
-					onChange={(event) => {
-						this.handleChange(event);
+					onChange={(name, value) => {
+						this.handleSelectChange(name, value);
 					}}
 					options={actionOptions}
 				/>
@@ -67,8 +73,8 @@ class AddFuel extends Component {
 					name="type"
 					value={this.state.type}
 					placeholder="Select a type.."
-					onChange={(event) => {
-						this.handleChange(event);
+					onChange={(name, value) => {
+						this.handleSelectChange(name, value);
 					}}
 					options={typeOptions}
 				/>
