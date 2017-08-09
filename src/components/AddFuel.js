@@ -4,30 +4,38 @@ import EditableSelect from './EditableSelect';
 const actionOptions = [
 	{
 		name: 'Test 1',
-		value: 'test1',
+		value: 'Test 1x',
 	},
 	{
 		name: 'Test 2',
-		value: 'test2',
+		value: 'Test 1x',
 	},
 	{
 		name: 'Test 3',
-		value: 'test3',
+		value: 'Test 1x',
+	},
+	{
+		name: 'New York',
+		value: 'New Yorkx',
+	},
+	{
+		name: 'California',
+		value: 'Californiax',
 	},
 ];
 
 const typeOptions = [
 	{
 		name: 'type 1',
-		value: 'test1',
+		value: 'type 1x',
 	},
 	{
 		name: 'type 2',
-		value: 'test2',
+		value: 'type 2x',
 	},
 	{
 		name: 'type 3',
-		value: 'test3',
+		value: 'type 3x',
 	},
 ];
 

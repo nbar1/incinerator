@@ -15,9 +15,16 @@ const Select = styled.div`
 	position: relative;
 	width: 100%;
 
-	> div {
-		padding: 0.5em;
+	> input {
+		background: transparent;
+		border: none;
+		box-sizing: border-box;
+		color: #b3b3b3;
+		font-size: 1.15em;
+		outline: none;
+		padding: 0.35em;
 		position: relative;
+		width: 100%;
 		z-index: 2;
 	}
 
@@ -27,14 +34,18 @@ const Select = styled.div`
 		padding: 0;
 
 		&.show {
-			border-bottom: 1px solid #5a5a5a;
 			display: block;
 		}
 	}
 
 	li {
 		border-top: 1px solid #5a5a5a;
+		color: #868686;
 		padding: 0.5em;
+
+		&:last-child {
+			border-bottom: 1px solid #5a5a5a;
+		}
 	}
 
 	.dropdown-arrow:before {
@@ -48,50 +59,90 @@ const Select = styled.div`
 	}
 `;
 
+const SetButton = styled.div`
+	background: #b16322;
+	color: #000;
+	display: none;
+	font-size: 1em;
+	height: 1.4em;
+	line-height: 1.4em;
+	padding: 0 0.2em;
+	position: absolute;
+	right: 0.4em;
+	top: 0.4em;
+	width: auto;
+	z-index: 4;
+
+	&.show {
+		display: block;
+	}
+`;
+
 class EditableSelect extends Component {
 	constructor() {
 		super();
 
 		this.state = {
 			showOptions: false,
+			showSetButton: false,
+			selectedTitle: '',
 		};
 	}
 
-	selectItem(value) {
+	selectItem(name, value) {
+		if (!value) return;
+
 		this.setState({
 			showOptions: false,
+			showSetButton: false,
+			selectedTitle: name,
 		});
 
 		this.props.onChange(this.props.name, value);
 	}
 
-	toggleList() {
+	showList() {
 		this.setState({
-			showOptions: !this.state.showOptions,
+			showOptions: true,
+		});
+	}
+
+	updateValue(event) {
+		this.setState({
+			selectedTitle: event.target.value,
+			showSetButton: true,
 		});
 	}
 
 	render() {
-		let selectedOption = this.props.options.filter((option) => {
-			return option.value === this.props.value;
+		let displayOptions = this.props.options.filter((option, index) => {
+			return option.name.toLowerCase().indexOf(this.state.selectedTitle.toLowerCase()) > -1;
 		});
-
-		let selectedOptionName = (selectedOption.length) ? selectedOption[0].name : this.props.placeholder;
 
 		return (
 			<Select>
-				<div onClick={this.toggleList.bind(this)}>{selectedOptionName}</div>
+				<input
+					value={this.state.selectedTitle}
+					onChange={this.updateValue.bind(this)}
+					onFocus={this.showList.bind(this)}
+				/>
 				<ul className={this.state.showOptions ? 'show' : ''}>
-					{this.props.options.map((option, key) => {
+					{displayOptions.map((option, key) => {
 						return <li
 							key={key}
 							onClick={() => {
-								return this.selectItem(option.value);
+								return this.selectItem(option.name, option.value);
 							}}
 						>{option.name}</li>;
 					})}
 				</ul>
 				<span className="dropdown-arrow"></span>
+				<SetButton
+					className={this.state.showSetButton ? 'show' : ''}
+					onClick={() => {
+						return this.selectItem(this.state.selectedTitle, this.state.selectedTitle);
+					}}
+				>SET</SetButton>
 			</Select>
 		);
 	}
