@@ -25,7 +25,7 @@ class Header extends Component {
 	render() {
 		return (
 			<HeaderWrapper>
-				<Link to="/fuel"><Logo alt="Incinerator" src={logo} /></Link>
+				<Link to="/fuel/add"><Logo alt="Incinerator" src={logo} /></Link>
 			</HeaderWrapper>
 		);
 	}
