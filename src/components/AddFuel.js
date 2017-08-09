@@ -58,14 +58,18 @@ class AddFuel extends Component {
 					name="action"
 					value={this.state.action}
 					placeholder="Select an action.."
-					onChange={this.handleChange}
+					onChange={(event) => {
+						this.handleChange(event);
+					}}
 					options={actionOptions}
 				/>
 				<EditableSelect
 					name="type"
 					value={this.state.type}
 					placeholder="Select a type.."
-					onChange={this.handleChange}
+					onChange={(event) => {
+						this.handleChange(event);
+					}}
 					options={typeOptions}
 				/>
 			</div>

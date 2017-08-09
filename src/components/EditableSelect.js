@@ -7,7 +7,7 @@ const Select = styled.div`
 	border: none;
 	border-radius: 0;
 	box-sizing: border-box;
-	color: #fff;
+	color: #b3b3b3;
 	display: block;
 	font-size: 1.15em;
 	margin: 0 0 0.5em 0;
@@ -23,6 +23,16 @@ const Select = styled.div`
 		left: 0;
 		width: 100%;
 		height: 100%;
+	}
+
+	.dropdown-arrow:before {
+		color: #5d5d5d;
+		content: '\u25b8';
+		font-size: 26px;
+		position: absolute;
+		right: 13px;
+		top: 3px;
+		transform: rotate(90deg);
 	}
 `;
 
@@ -43,6 +53,7 @@ class EditableSelect extends Component {
 					})}
 				</select>
 				{selectedOptionName}
+				<span className="dropdown-arrow"></span>
 			</Select>
 		);
 	}
